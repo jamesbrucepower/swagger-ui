@@ -790,7 +790,7 @@ SwaggerUi.Views.OperationView = Backbone.View.extend({
     if (opts.showRequestHeaders) {
       var form = $('.sandbox', $(this.el)),
           map = this.getInputMap(form),
-          requestHeaders = this.model.getHeaderParams(map);
+          requestHeaders = Object.assign(this.model.getHeaderParams(map), this.model.getRealHeaderParams(this.map));
       delete requestHeaders['Content-Type'];
       $('.request_headers', $(this.el)).html('<pre>' + _.escape(JSON.stringify(requestHeaders, null, '  ')).replace(/\n/g, '<br>') + '</pre>');
     }

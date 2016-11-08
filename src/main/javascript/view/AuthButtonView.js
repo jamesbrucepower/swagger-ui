@@ -45,6 +45,10 @@ SwaggerUi.Views.AuthButtonView = Backbone.View.extend({
 
         this.popup = new SwaggerUi.Views.PopupView({model: authsModel});
         this.popup.render();
+	$('.api-popup-dialog').find('.markdown').each(function(){
+        	$(this).html(marked($(this).html()));
+      	});
+      	$('.api-popup-dialog').find('button').addClass('btn btn-xl btn-outline');
     },
 
     renderAuths: function (auths) {

@@ -14,11 +14,11 @@ templates['apikey_auth'] = template({"1":function(container,depth0,helpers,parti
     + ((stack1 = (helpers.sanitize || (depth0 && depth0.sanitize) || helpers.helperMissing).call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.value : depth0),{"name":"sanitize","hash":{},"data":data})) != null ? stack1 : "")
     + "</span>\n";
 },"3":function(container,depth0,helpers,partials,data) {
-    return "                <input placeholder=\"api_key\" class=\"auth_input input_apiKey_entry\" name=\"apiKey\" type=\"text\"/>\n";
+    return "                <input placeholder=\"api_key\" class=\"auth_input input_apiKey_entry\" name=\"apiKey\" type=\"text\"/>\n                <input placeholder=\"signature\" class=\"auth_input input_signature_entry\" name=\"signature\" type=\"text\"/>\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing;
 
-  return "<div class=\"key_input_container\">\n    <h3 class=\"auth__title\">Api key authorization</h3>\n    <div class=\"auth__description\">"
+  return "<div class=\"key_input_container\">\n    <h3 class=\"auth__title\">Api key authorization</h3>\n    <div class=\"markdown auth__description\">"
     + ((stack1 = (helpers.sanitize || (depth0 && depth0.sanitize) || alias2).call(alias1,(depth0 != null ? depth0.description : depth0),{"name":"sanitize","hash":{},"data":data})) != null ? stack1 : "")
     + "</div>\n    <div>\n        <div class=\"key_auth__field\">\n            <span class=\"key_auth__label\">name:</span>\n            <span class=\"key_auth__value\">"
     + ((stack1 = (helpers.escape || (depth0 && depth0.escape) || alias2).call(alias1,(depth0 != null ? depth0.name : depth0),{"name":"escape","hash":{},"data":data})) != null ? stack1 : "")
@@ -21934,6 +21934,23 @@ window.SwaggerUi.utils = {};
 
 'use strict';
 
+var Operation = Operation || {};
+
+Operation.prototype.getRealHeaderParams = function(map) {
+  var obj = this.execute(map, {
+    mock: true
+  });
+  this.clientAuthorizations.apply(obj, this.operation.security);
+  for (var key in obj.headers) {
+    if (typeof(obj.headers[key]) !== 'string') {
+      obj.headers[key] = obj.headers[key].toString();
+    }
+  }
+  return obj.headers;
+};
+
+'use strict';
+
 window.SwaggerUi.utils = {
     parseSecurityDefinitions: function (security) {
         var auths = Object.assign({}, window.swaggerUi.api.authSchemes || window.swaggerUi.api.securityDefinitions);
@@ -22126,6 +22143,10 @@ SwaggerUi.Views.AuthButtonView = Backbone.View.extend({
 
         this.popup = new SwaggerUi.Views.PopupView({model: authsModel});
         this.popup.render();
+	$('.api-popup-dialog').find('.markdown').each(function(){
+        	$(this).html(marked($(this).html()));
+      	});
+      	$('.api-popup-dialog').find('button').addClass('btn btn-xl btn-outline');
     },
 
     renderAuths: function (auths) {
@@ -23607,7 +23628,7 @@ SwaggerUi.Views.OperationView = Backbone.View.extend({
     if (opts.showRequestHeaders) {
       var form = $('.sandbox', $(this.el)),
           map = this.getInputMap(form),
-          requestHeaders = this.model.getHeaderParams(map);
+          requestHeaders = Object.assign(this.model.getHeaderParams(map), this.model.getRealHeaderParams(this.map));
       delete requestHeaders['Content-Type'];
       $('.request_headers', $(this.el)).html('<pre>' + _.escape(JSON.stringify(requestHeaders, null, '  ')).replace(/\n/g, '<br>') + '</pre>');
     }

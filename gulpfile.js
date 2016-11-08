@@ -52,7 +52,8 @@ function _dist() {
         './node_modules/es5-shim/es5-shim.js',
         './lib/sanitize-html.min.js',
         './src/main/javascript/**/*.js',
-        './node_modules/swagger-client/browser/swagger-client.js'
+        './node_modules/swagger-client/browser/swagger-client.js',
+	'./src/main/javascript/utils/operation.extension.js'
       ]),
       gulp
         .src(['./src/main/template/templates.js'])
