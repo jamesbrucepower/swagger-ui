@@ -22170,8 +22170,8 @@ SwaggerUi.Views.AuthButtonView = Backbone.View.extend({
 
         this.popup = new SwaggerUi.Views.PopupView({model: authsModel});
         this.popup.render();
-        if (typeof(window.swaggerUi.onAuthPopup === 'function')) {
-	  window.swaggerUi.onAuthPopup();
+        if (typeof(window.swaggerUi.options.onAuthPopup === 'function')) {
+	  window.swaggerUi.options.onAuthPopup();
         }
     },
 
