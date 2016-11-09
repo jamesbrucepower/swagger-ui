@@ -7,7 +7,8 @@ SwaggerUi.Views.ApiKeyAuthView = Backbone.View.extend({ // TODO: append this to 
     },
 
     selectors: {
-        apikeyInput: '.input_apiKey_entry'
+        apikeyInput: '.input_apiKey_entry',
+	apiSecretInput: '.input_apiSecret_entry'
     },
 
     template: Handlebars.templates.apikey_auth,
@@ -39,6 +40,7 @@ SwaggerUi.Views.ApiKeyAuthView = Backbone.View.extend({ // TODO: append this to 
     highlightInvalid: function () {
         if (!this.isValid()) {
             this.$(this.selectors.apikeyInput).addClass('error');
+            this.$(this.selectors.apiSecretInput).addClass('error');
         }
     }
 

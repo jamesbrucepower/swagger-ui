@@ -65,7 +65,8 @@ SwaggerUi.Views.AuthView = Backbone.View.extend({
                 keyAuth = new SwaggerClient.ApiKeyAuthorization(
                     auth.get('name'),
                     auth.get('value'),
-                    auth.get('in')
+                    auth.get('in'),
+                    auth.get('secret')
                 );
 
                 this.router.api.clientAuthorizations.add(auth.get('title'), keyAuth);

@@ -22063,7 +22063,8 @@ SwaggerUi.Models.ApiKeyAuthModel = Backbone.Model.extend({
         'in': '',
         name: '',
         title: '',
-        value: ''
+        value: '', 
+	secret: ''
     },
 
     initialize: function () {
@@ -22071,13 +22072,14 @@ SwaggerUi.Models.ApiKeyAuthModel = Backbone.Model.extend({
     },
 
     validate: function () {
-        var valid = !!this.get('value');
+        var valid = !!this.get('value') && !!this.get('secret');
 
         this.set('valid', valid);
 
         return valid;
     }
 });
+
 'use strict';
 
 SwaggerUi.Views.ApiKeyAuthView = Backbone.View.extend({ // TODO: append this to global SwaggerUi
@@ -22087,7 +22089,8 @@ SwaggerUi.Views.ApiKeyAuthView = Backbone.View.extend({ // TODO: append this to 
     },
 
     selectors: {
-        apikeyInput: '.input_apiKey_entry'
+        apikeyInput: '.input_apiKey_entry',
+	apiSecretInput: '.input_apiSecret_entry'
     },
 
     template: Handlebars.templates.apikey_auth,
@@ -22119,10 +22122,12 @@ SwaggerUi.Views.ApiKeyAuthView = Backbone.View.extend({ // TODO: append this to 
     highlightInvalid: function () {
         if (!this.isValid()) {
             this.$(this.selectors.apikeyInput).addClass('error');
+            this.$(this.selectors.apiSecretInput).addClass('error');
         }
     }
 
 });
+
 'use strict';
 
 SwaggerUi.Views.AuthButtonView = Backbone.View.extend({
@@ -22407,7 +22412,8 @@ SwaggerUi.Views.AuthView = Backbone.View.extend({
                 keyAuth = new SwaggerClient.ApiKeyAuthorization(
                     auth.get('name'),
                     auth.get('value'),
-                    auth.get('in')
+                    auth.get('in'),
+                    auth.get('secret')
                 );
 
                 this.router.api.clientAuthorizations.add(auth.get('title'), keyAuth);
