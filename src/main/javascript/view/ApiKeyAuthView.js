@@ -3,7 +3,8 @@
 SwaggerUi.Views.ApiKeyAuthView = Backbone.View.extend({ // TODO: append this to global SwaggerUi
 
     events: {
-        'change .input_apiKey_entry': 'apiKeyChange'
+        'change .input_apiKey_entry': 'apiKeyChange',
+	'change .input_apiSecret_entry': 'apiSecretChange'
     },
 
     selectors: {
@@ -31,6 +32,15 @@ SwaggerUi.Views.ApiKeyAuthView = Backbone.View.extend({ // TODO: append this to 
         }
 
         this.model.set('value', val);
+    },
+
+    apiSecretChange: function (e) {
+        var val = $(e.target).val();
+        if (val) {
+            this.$(this.selectors.apiSecretInput).removeClass('error');
+        }
+
+        this.model.set('secret', val);
     },
 
     isValid: function () {
