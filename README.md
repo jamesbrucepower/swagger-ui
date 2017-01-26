@@ -24,11 +24,13 @@ The OpenAPI Specification has undergone 4 revisions since initial creation in 20
 
 Swagger UI Version | Release Date | OpenAPI Spec compatibility | Notes | Status
 ------------------ | ------------ | -------------------------- | ----- | ------
-2.2.6              | 2016-10-14   | 1.1, 1.2, 2.0              | [tag v2.2.6](https://github.com/swagger-api/swagger-ui/tree/v2.2.6) |
+2.2.10             | 2017-01-04   | 1.1, 1.2, 2.0              | [tag v2.2.10](https://github.com/swagger-api/swagger-ui/tree/v2.2.6) |
 2.1.5              | 2016-07-20   | 1.1, 1.2, 2.0              | [tag v2.1.5](https://github.com/swagger-api/swagger-ui/tree/v2.1.5) |
 2.0.24             | 2014-09-12   | 1.1, 1.2 | [tag v2.0.24](https://github.com/swagger-api/swagger-ui/tree/v2.0.24) |
 1.0.13             | 2013-03-08   | 1.1, 1.2 | [tag v1.0.13](https://github.com/swagger-api/swagger-ui/tree/v1.0.13) |
 1.0.1              | 2011-10-11   | 1.0, 1.1 | [tag v1.0.1](https://github.com/swagger-api/swagger-ui/tree/v1.0.1)   |
+
+**Note:** Support for versions older than 1.2 is limited and you may experience issues we cannot improve and support. We highly recommend that you upgrade your spec to the latest version.
 
 ## How to Use It
 
@@ -41,7 +43,8 @@ Swagger UI works in all evergreen desktop browsers (Chrome, Safari, Firefox). In
 ### Build
 You can rebuild swagger-ui on your own to tweak it or just so you can say you did.  To do so, follow these steps:
 
-### Windows Users: Please install [Python](https://www.python.org/downloads/windows/) before follow below guidelines for node-gyp rebuild to run.
+* Ensure you have `nodejs` 4.0 or greater installed, and on your classpath.
+* Windows Users: Please install [Python](https://www.python.org/downloads/windows/) before following the guidelines below for node-gyp rebuild to run.
 
 1. `npm install`
 2. `npm run build`
@@ -49,6 +52,13 @@ You can rebuild swagger-ui on your own to tweak it or just so you can say you di
 
 ### Development
 Use `npm run serve` to make a new build, watch for changes, and serve the result at http://localhost:8080/.
+
+### Running with Docker
+
+```
+docker pull swaggerapi/swagger-ui
+docker run -p 80:8080 swaggerapi/swagger-ui
+```
 
 ### Build using Docker
 
